@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <!-- 无id时, 可以使用index(反正也是就地更新) -->
+    <div
+      v-for="(item, index) in arr"
+      style="display: inline-block"
+      :key="index"
+    >
+      <input type="checkbox" v-model="checkNumArr" :value="item" />
+      <span>{{ item }}</span>
+    </div>
+    <p>你选中的元素, 累加的值和为: {{ theSum }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      arr: [9, 15, 19, 25, 29, 31, 48, 57, 62, 79, 87],
+      checkNumArr: [], //  保存用户选中的数字
+    };
+  },
+  computed: {
+    theSum() {
+      return this.checkNumArr.reduce((sum, val) => {
+        return (sum += val);
+      }, 0);
+    },
+  },
+};
 </script>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style>
 </style>
